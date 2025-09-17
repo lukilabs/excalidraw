@@ -14,6 +14,7 @@ import {
   getFontString,
   isRTL,
   getVerticalOffset,
+  isCanvasFilterSupported,
 } from "@excalidraw/common";
 
 import type {
@@ -79,10 +80,8 @@ import type { RoughCanvas } from "roughjs/bin/canvas";
 // as a temp hack to make images in dark theme look closer to original
 // color scheme (it's still not quite there and the colors look slightly
 // desatured, alas...)
-export const IMAGE_INVERT_FILTER_INVERT_AMOUNT = "100%";
-export const IMAGE_INVERT_FILTER_HUE_ROTATE_AMOUNT = "180deg";
-export const IMAGE_INVERT_FILTER_SATURATE_AMOUNT = "1.25";
-export const IMAGE_INVERT_FILTER = `invert(${IMAGE_INVERT_FILTER_INVERT_AMOUNT}) hue-rotate(${IMAGE_INVERT_FILTER_HUE_ROTATE_AMOUNT}) saturate(${IMAGE_INVERT_FILTER_SATURATE_AMOUNT})`;
+export const IMAGE_INVERT_FILTER =
+  "invert(100%) hue-rotate(180deg) saturate(1.25)";
 
 const isPendingImageElement = (
   element: ExcalidrawElement,
@@ -90,10 +89,6 @@ const isPendingImageElement = (
 ) =>
   isInitializedImageElement(element) &&
   !renderConfig.imageCache.has(element.fileId);
-
-function isCanvasFilterSupported() {
-  return "filter" in (CanvasRenderingContext2D.prototype || {});
-}
 
 const shouldResetImageFilter = (
   element: ExcalidrawElement,
@@ -489,6 +484,7 @@ const drawElementOnCanvas = (
             img,
             img.naturalWidth,
             img.naturalHeight,
+            IMAGE_INVERT_FILTER,
           );
         }
 

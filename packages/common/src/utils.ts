@@ -1278,3 +1278,7 @@ export const reduceToCommonValue = <T, R = T>(
 
   return commonValue;
 };
+
+export function isCanvasFilterSupported() {
+  return "filter" in (CanvasRenderingContext2D.prototype || {});
+}
