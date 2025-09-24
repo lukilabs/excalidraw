@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useDeferredValue } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { EDITOR_LS_KEYS, debounce, isDevEnv } from "@excalidraw/common";
 
@@ -41,7 +41,7 @@ const MermaidToExcalidraw = ({
       EditorLocalStorage.get<string>(EDITOR_LS_KEYS.MERMAID_TO_EXCALIDRAW) ||
       MERMAID_EXAMPLE,
   );
-  const deferredText = useDeferredValue(text.trim());
+  const deferredText = text.trim();
   const [error, setError] = useState<Error | null>(null);
 
   const canvasRef = useRef<HTMLDivElement>(null);
